@@ -1,0 +1,12 @@
+Source: ros-rolling-rcss3d-agent
+Section: misc
+Priority: optional
+Maintainer: kenji <kenjibrameld@gmail.com>
+Build-Depends: debhelper (>= 9.0.0), ros-rolling-ament-cmake-gtest, ros-rolling-ament-cmake-ros, ros-rolling-ament-lint-auto, ros-rolling-ament-lint-common, ros-rolling-rclcpp, ros-rolling-rcss3d-agent-msgs, ros-rolling-ros-workspace
+Homepage: 
+Standards-Version: 3.9.2
+
+Package: ros-rolling-rcss3d-agent
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-rolling-rclcpp, ros-rolling-rcss3d-agent-msgs, ros-rolling-ros-workspace
+Description: Launches a RoboCup 3D Simulation Agent, and converts data to and from ROS2 msgs
