@@ -1,8 +1,0 @@
-ros-galactic-rcss3d-agent-msgs (0.0.3-2focal) focal; urgency=high
-
-  * Implemented all rcss3d_agent_msgs interfaces
-  * Contributors: ijnek
-
- -- kenji <kenjibrameld@gmail.com>  Thu, 27 Jan 2022 15:00:00 -0000
-
-
