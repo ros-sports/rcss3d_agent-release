@@ -1,0 +1,12 @@
+Source: ros-rolling-rcss3d-agent-basic
+Section: misc
+Priority: optional
+Maintainer: ijnek <kenjibrameld@gmail.com>
+Build-Depends: debhelper (>= 9.0.0), ros-rolling-ament-cmake, ros-rolling-ament-lint-auto, ros-rolling-ament-lint-common, ros-rolling-rclcpp-components, ros-rolling-rcss3d-agent, ros-rolling-ros-workspace
+Homepage: 
+Standards-Version: 3.9.2
+
+Package: ros-rolling-rcss3d-agent-basic
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-rolling-rclcpp-components, ros-rolling-rcss3d-agent, ros-rolling-ros-workspace
+Description: Basic rcss3d agent node that uses rcss3d_agent_msgs
