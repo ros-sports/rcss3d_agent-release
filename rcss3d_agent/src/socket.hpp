@@ -31,7 +31,7 @@ extern "C"
 
 #include <iosfwd>
 
-#include "./socketaddress.hpp"
+#include "socketaddress.hpp"
 
 namespace rcss3d_agent
 {
@@ -167,10 +167,14 @@ public:
 
   unsigned readExactly(char * _buf, unsigned _size)
   {
-    unsigned total;
-    for (total = 0;
-      total < _size;
-      total += read(_buf + total, _size - total)) {}
+    unsigned total = 0;
+    for (unsigned i = 0; i < 100; ++i) {  // Allow 100 retries
+      if (total == _size) {
+        break;
+      } else {
+        total += read(_buf + total, _size - total);
+      }
+    }
     return total;
   }
 
