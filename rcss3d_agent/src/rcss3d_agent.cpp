@@ -21,9 +21,9 @@
 #include <algorithm>
 #include <memory>
 
-#include "./sexp_creator.hpp"
-#include "./sexp_parser.hpp"
-#include "./connection.hpp"
+#include "sexp_creator.hpp"
+#include "sexp_parser.hpp"
+#include "connection.hpp"
 
 using namespace std::chrono_literals;
 
@@ -38,13 +38,13 @@ Rcss3dAgent::Rcss3dAgent(const Params & p)
   RCLCPP_DEBUG(logger, "Declare parameters");
 
   // Log parameters for debugging
-  logParametersToRclcppDebug(p.rcss3d_host, p.rcss3d_port, p.team, p.unum);
+  logParametersToRclcppDebug(p.model, p.rcss3d_host, p.rcss3d_port, p.team, p.unum);
 
   // Initialise connection
   connection->initialise(p.rcss3d_host, p.rcss3d_port);
 
   // Create the robot
-  connection->send(sexp_creator::createCreateMessage());
+  connection->send(sexp_creator::createCreateMessage(p.model));
 
   // Receive, this is needed for the init message to be sent next
   connection->receive();
@@ -57,8 +57,13 @@ Rcss3dAgent::Rcss3dAgent(const Params & p)
     [this]() {
       while (rclcpp::ok()) {
         std::string recv = connection->receive();
-        RCLCPP_DEBUG(this->logger, ("Received: " + recv).c_str());
-        handle(recv);
+        if (!recv.empty()) {
+          RCLCPP_DEBUG(this->logger, ("Received: " + recv).c_str());
+          handle(recv);
+        } else {
+          // Simulation connection broken, log to ERROR is done by connection.cpp
+          break;
+        }
       }
     });
 }
@@ -116,7 +121,14 @@ void Rcss3dAgent::sendBeam(const rcss3d_agent_msgs::msg::Beam & b)
 
 void Rcss3dAgent::sendSay(const rcss3d_agent_msgs::msg::Say & s)
 {
-  connection->send(sexp_creator::createSayMessage(s));
+  if (!s.message.empty()) {
+    connection->send(sexp_creator::createSayMessage(s));
+  } else {
+    RCLCPP_ERROR(
+      logger,
+      "Say message was not sent as it was empty. Sending an empty Say message is prohibited "
+      "as it may cause undefined behaviour on the receiver end.");
+  }
 }
 
 void Rcss3dAgent::registerPerceptCallback(
@@ -126,9 +138,10 @@ void Rcss3dAgent::registerPerceptCallback(
 }
 
 void Rcss3dAgent::logParametersToRclcppDebug(
-  std::string rcss3d_host, int rcss3d_port, std::string team, int unum)
+  std::string model, std::string rcss3d_host, int rcss3d_port, std::string team, int unum)
 {
   RCLCPP_DEBUG(logger, "Parameters: ");
+  RCLCPP_DEBUG(logger, "  model: %s", model.c_str());
   RCLCPP_DEBUG(logger, "  rcss3d/host: %s", rcss3d_host.c_str());
   RCLCPP_DEBUG(logger, "  rcss3d/port: %d", rcss3d_port);
   RCLCPP_DEBUG(logger, "  team: %s", team.c_str());
