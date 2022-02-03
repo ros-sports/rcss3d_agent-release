@@ -2,6 +2,12 @@
 Changelog for package rcss3d_agent_basic
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.6 (2022-02-04)
+------------------
+* add synchronize subscription
+* remove leading slash from topic name
+* Contributors: ijnek
+
 0.0.5 (2022-02-03)
 ------------------
 * comunicate that the node has to be restarted
