@@ -25,6 +25,7 @@ set(msg_files
   "msg/AgentState.msg"
   "msg/Ball.msg"
   "msg/Beam.msg"
+  "msg/Effector.msg"
   "msg/FieldLine.msg"
   "msg/Flag.msg"
   "msg/ForceResistance.msg"
@@ -38,6 +39,7 @@ set(msg_files
   "msg/Player.msg"
   "msg/Say.msg"
   "msg/Spherical.msg"
+  "msg/Synchronize.msg"
   "msg/UniversalJointPos.msg"
   "msg/UniversalJointVel.msg"
   "msg/Vision.msg")
