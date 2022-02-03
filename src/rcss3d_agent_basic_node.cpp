@@ -75,9 +75,16 @@ Rcss3dAgentBasicNode::Rcss3dAgentBasicNode(const rclcpp::NodeOptions & options)
 
   saySub =
     create_subscription<rcss3d_agent_msgs::msg::Say>(
-    "/effectors/say", rclcpp::ServicesQoS(),
+    "effectors/say", rclcpp::ServicesQoS(),
     [this](rcss3d_agent_msgs::msg::Say::SharedPtr cmd) {
       rcss3dAgent->sendSay(*cmd);
+    });
+
+  synchronizeSub =
+    create_subscription<rcss3d_agent_msgs::msg::Synchronize>(
+    "effectors/synchronize", rclcpp::ServicesQoS(),
+    [this](rcss3d_agent_msgs::msg::Synchronize::SharedPtr) {
+      rcss3dAgent->sendSynchronize();
     });
 }
 
