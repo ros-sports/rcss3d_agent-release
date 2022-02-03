@@ -2,6 +2,12 @@
 Changelog for package rcss3d_agent
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.6 (2022-02-04)
+------------------
+* add missing include for std::optional
+* add effector msg to allow synchronize effector to be used
+* Contributors: ijnek, Scott K Logan
+
 0.0.5 (2022-02-03)
 ------------------
 * add score left and score right to message received from simulator
